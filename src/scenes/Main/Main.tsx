@@ -1,22 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { Block } from "../../components/Block";
+import { SceneProvider } from "../../contexts/useScene";
 
-import { useGravity } from "../../hooks/useGravity";
-
-import { Block } from "./Styles";
-
-export const Main = () => {
-  const block = useRef<HTMLDivElement>(null);
-  // const [stop, setStop] = useState(false);
-
-  useGravity({ ref: block });
-
-  // console.log(stop);
-
-  // useEffect(() => {
-  //   window.addEventListener("click", () => {
-  //     setStop((e: boolean) => !e);
-  //   });
-  // }, []);
-
-  return <Block ref={block} />;
-};
+export const Main = () => (
+  <SceneProvider>
+    <Block />
+  </SceneProvider>
+);

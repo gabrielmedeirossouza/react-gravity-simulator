@@ -1,57 +1,45 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useScene } from "../contexts/useScene";
 
 export interface INextAnimationFrameHandler {
   firstFrameTime: number;
   deltaTime: number;
   fps: number;
+  time: number;
 }
 
-type TNextAnimationFrameHandler = ({
-  // eslint-disable-next-line no-unused-vars
-  firstFrameTime,
-  // eslint-disable-next-line no-unused-vars
-  deltaTime,
-  // eslint-disable-next-line no-unused-vars
-  fps,
-}: INextAnimationFrameHandler) => void;
+type TNextAnimationFrameHandler = ({ firstFrameTime, deltaTime, fps, time }: INextAnimationFrameHandler) => void;
 
-interface IUseAnimationFrameProps {
-  nextAnimationFrameHandler: TNextAnimationFrameHandler;
-  stop?: boolean;
-}
+export const useAnimationFrame = (nextAnimationFrameHandler: TNextAnimationFrameHandler) => {
+  const scene = useScene();
 
-let previousTime = 0;
-
-export const useAnimationFrame = ({
-  nextAnimationFrameHandler,
-  stop = false,
-}: IUseAnimationFrameProps) => {
+  const previousTime = useRef(0);
   const frame = useRef(0);
   const firstFrameTime = useRef(performance.now());
 
-  const animate = (currentTime: number) => {
-    const deltaTime = (currentTime - previousTime) / 1000;
-    const fps = 1 / deltaTime;
+  const animate = useCallback(
+    (currentTime: number) => {
+      const deltaTime = (currentTime - previousTime.current) / 1000;
+      const fps = 1 / deltaTime;
 
-    nextAnimationFrameHandler({
-      firstFrameTime: firstFrameTime.current,
-      deltaTime,
-      fps,
-    });
+      nextAnimationFrameHandler({
+        firstFrameTime: firstFrameTime.current,
+        deltaTime,
+        fps,
+        time: currentTime,
+      });
 
-    previousTime = currentTime;
+      previousTime.current = currentTime;
 
-    frame.current = requestAnimationFrame(animate);
-  };
+      frame.current = requestAnimationFrame(animate);
+    },
+    [nextAnimationFrameHandler]
+  );
 
   useEffect(() => {
-    if (!stop) {
-      firstFrameTime.current = performance.now();
-      frame.current = requestAnimationFrame(animate);
-    } else {
-      cancelAnimationFrame(frame.current);
-    }
+    firstFrameTime.current = performance.now();
+    frame.current = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(frame.current);
-  }, [stop]);
+  }, [scene.elements, animate]);
 };
