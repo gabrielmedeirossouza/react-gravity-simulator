@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import { METER_TO_PIXEL_FACTOR } from "../../constants";
+import { Vector2 } from "../../core/Vector2";
 import { useSceneObject } from "../../sceneObjects/hooks/useSceneObject";
 
 import { withBoxCollider } from "../../sceneObjects/scripts/colliders/withBoxCollider";
@@ -10,14 +11,10 @@ import { withImpulse } from "../../sceneObjects/scripts/externalForces/withImpul
 import { Container } from "./styles";
 
 export const Block = () => {
-  const impulse = useRef(15);
-
   const [elementRef, sceneObject] = useSceneObject(
     withGravity(),
     // withBoxCollider()
-    withImpulse({impulse, time: 1000})
-    // withCollider(),
-    // withPlayerController()
+    withImpulse({impulse: 35, time: 1000, direction: new Vector2(-1, 1)}),
   );
 
   useEffect(() => {
