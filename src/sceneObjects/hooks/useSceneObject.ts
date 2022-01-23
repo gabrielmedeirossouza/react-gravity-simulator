@@ -38,16 +38,17 @@ export const useSceneObject = (...args: ((argProps: IArgProps) => void)[]) => {
 
   useAnimationFrame((loopProps) => {
     args.forEach((arg) => arg({
-      loop: loopProps,
-      scene,
-      sceneObject: {
-        mass: mass.current,
-        position: position.current,
-        velocity: velocity.current,
-        acceleration: acceleration.current,
-      },
-      element: elementRef,
-    }));
+        loop: loopProps,
+        scene,
+        sceneObject: {
+          mass: mass.current,
+          position: position.current,
+          velocity: velocity.current,
+          acceleration: acceleration.current,
+        },
+        element: elementRef,
+      })
+    );
 
     updateElementWithSceneObject();
   });

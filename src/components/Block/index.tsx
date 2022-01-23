@@ -10,16 +10,22 @@ import { withImpulse } from "../../sceneObjects/scripts/externalForces/withImpul
 
 import { Container } from "./styles";
 
-export const Block = () => {
+interface IBlockProps {
+  position: Vector2;
+  impulse: Vector2;
+  time: number;
+}
+
+export const Block = ({ impulse, time, position }: IBlockProps) => {
   const [elementRef, sceneObject] = useSceneObject(
     withGravity(),
     // withBoxCollider()
-    withImpulse({impulse: 35, time: 1000, direction: new Vector2(-1, 1)}),
+    withImpulse({ impulse, time })
   );
 
   useEffect(() => {
-    sceneObject.position.x = window.innerWidth / 2 / METER_TO_PIXEL_FACTOR;
-    sceneObject.position.y = window.innerHeight / 2 / METER_TO_PIXEL_FACTOR * -1;
+    sceneObject.position.x = position.x / METER_TO_PIXEL_FACTOR;
+    sceneObject.position.y = (position.y / METER_TO_PIXEL_FACTOR) * -1;
   }, []);
 
   return <Container ref={elementRef} />;
