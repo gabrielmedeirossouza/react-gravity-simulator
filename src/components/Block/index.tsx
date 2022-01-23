@@ -1,27 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { METER_TO_PIXEL_FACTOR } from "../../constants";
+import { useSceneObject } from "../../sceneObjects/hooks/useSceneObject";
+import { withGravity } from "../../sceneObjects/scripts/withGravity";
 
 import { Container } from "./styles";
 
-import { useScene } from "../../contexts/useScene";
-import { usePhysics } from "../../hooks/usePhysics";
-import { useUpdate } from "../../hooks/useUpdate";
-
-import { withGravity } from "../../scripts/withGravity";
-
 export const Block = () => {
-  const scene = useScene();
-  const element = useRef<HTMLDivElement>(null);
-
-  const physicsBody = usePhysics(
+  const [elementRef, sceneObject] = useSceneObject(
     withGravity()
     // withCollider(),
+    // withPlayerController()
   );
 
-  useUpdate(element, physicsBody);
-
   useEffect(() => {
-    scene.subscribeElement(element);
-  }, []);
+    sceneObject.position.x = window.innerWidth / 2 / METER_TO_PIXEL_FACTOR;
+  }, [sceneObject]);
 
-  return <Container ref={element} />;
+  return <Container ref={elementRef} />;
 };

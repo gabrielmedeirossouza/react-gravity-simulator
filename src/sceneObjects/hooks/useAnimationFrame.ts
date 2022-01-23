@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from "react";
-import { useScene } from "../contexts/useScene";
 
 export interface INextAnimationFrameHandler {
   firstFrameTime: number;
@@ -11,8 +10,6 @@ export interface INextAnimationFrameHandler {
 type TNextAnimationFrameHandler = ({ firstFrameTime, deltaTime, fps, time }: INextAnimationFrameHandler) => void;
 
 export const useAnimationFrame = (nextAnimationFrameHandler: TNextAnimationFrameHandler) => {
-  const scene = useScene();
-
   const previousTime = useRef(0);
   const frame = useRef(0);
   const firstFrameTime = useRef(performance.now());
@@ -41,5 +38,5 @@ export const useAnimationFrame = (nextAnimationFrameHandler: TNextAnimationFrame
     frame.current = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(frame.current);
-  }, [scene.elements, animate]);
+  }, [animate]);
 };

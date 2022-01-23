@@ -1,4 +1,7 @@
 import { createGlobalStyle } from "styled-components";
+import { METER_TO_PIXEL_FACTOR } from "../constants";
+
+const proportionalFontSize = `${METER_TO_PIXEL_FACTOR * 6.25}%`;
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -8,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-size: 625%;
+    font-size: ${proportionalFontSize};
+    overflow: hidden;
   }
 `;

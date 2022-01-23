@@ -1,5 +1,5 @@
 import { Block } from "../../components/Block";
-import { SceneProvider } from "../../contexts/useScene";
+import { SceneProvider } from "../../sceneObjects/contexts/useScene";
 
 export const Main = () => (
   <SceneProvider>
