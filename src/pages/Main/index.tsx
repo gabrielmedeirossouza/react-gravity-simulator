@@ -1,8 +1,12 @@
 import { Block } from "../../components/Block";
 import { SceneProvider } from "../../sceneObjects/contexts/useScene";
 
+import {Container} from './Styles'
+
 export const Main = () => (
   <SceneProvider>
-    <Block />
+    <Container>
+      <Block />
+    </Container>
   </SceneProvider>
 );

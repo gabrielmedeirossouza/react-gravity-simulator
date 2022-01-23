@@ -1,7 +1,7 @@
 import { createContext, ReactNode, RefObject, useCallback, useContext, useMemo, useState } from "react";
 
 interface Context {
-  elements: any[];
+  elements: RefObject<HTMLElement>[];
   subscribeElement: (element: RefObject<HTMLElement>) => void;
 }
 
@@ -9,10 +9,15 @@ interface Props {
   children: ReactNode;
 }
 
+export interface IContextResult {
+  elements: RefObject<HTMLElement>[];
+  subscribeElement: (element: RefObject<HTMLElement>) => void;
+}
+
 const SceneContext = createContext<Context>({} as Context);
 
 export const SceneProvider = ({ children }: Props) => {
-  const [elements, setElements] = useState([] as any[]);
+  const [elements, setElements] = useState<RefObject<HTMLElement>[]>([]);
 
   const subscribeElement = useCallback(
     (element: RefObject<HTMLElement>) => {

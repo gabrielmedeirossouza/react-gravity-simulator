@@ -55,7 +55,7 @@ module.exports = {
     camelcase: "off",
     "@typescript-eslint/no-shadow": "off",
     "prettier/prettier": [
-      "warn",
+      "off",
       {
         singleQuote: false,
         trailingComma: "es5",
@@ -65,6 +65,7 @@ module.exports = {
       },
     ],
     "no-param-reassign": ["error", { props: false }],
+    "implicit-arrow-linebreak": ["error", "beside"],
   },
   globals: {
     NodeJS: true,

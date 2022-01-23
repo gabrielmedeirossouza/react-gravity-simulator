@@ -1,6 +1,5 @@
-import { GRAVITY } from "../../core/Constants";
-import { INextAnimationFrameHandler } from "../hooks/useAnimationFrame";
-import { ISceneObject } from "../hooks/useSceneObject";
+import { GRAVITY } from "../../../core/Constants";
+import { IArgProps } from "../../hooks/useSceneObject";
 
 /*
  * Função horária da velocidade no MUV => V = Vo + at
@@ -28,14 +27,14 @@ import { ISceneObject } from "../hooks/useSceneObject";
  */
 
 export const withGravity =
-  () =>
-    ({ deltaTime }: INextAnimationFrameHandler, physicsBody: ISceneObject) => {
-      // Função horária da velocidade
-      const finalVelocity = physicsBody.velocity.y + GRAVITY * deltaTime;
+  () => ({ loop, sceneObject }: IArgProps) => {
+    // Função horária da velocidade => V = Vo + at
+    const finalVelocity = sceneObject.velocity.y + GRAVITY * loop.deltaTime;
 
-      // Função horária da posição no MUV => S = So + Vo. t ± (at²)/2
-      const finalDistance = physicsBody.position.y + physicsBody.velocity.y * deltaTime + (GRAVITY * deltaTime ** 2) / 2;
+    // Função horária da posição no MUV => S = So + Vo. t ± (at²)/2
+    const finalDistance =
+      sceneObject.position.y + sceneObject.velocity.y * loop.deltaTime + (GRAVITY * loop.deltaTime ** 2) / 2;
 
-      physicsBody.velocity.y = finalVelocity;
-      physicsBody.position.y = finalDistance;
-    };
+    sceneObject.velocity.y = finalVelocity;
+    sceneObject.position.y = finalDistance;
+  };
