@@ -1,7 +1,7 @@
-import { createContext, ReactNode, RefObject, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, MutableRefObject, ReactNode, RefObject, useCallback, useContext, useMemo, useRef } from "react";
 
 interface Context {
-  elements: RefObject<HTMLElement>[];
+  elements: MutableRefObject<RefObject<HTMLElement>[]>;
   subscribeElement: (element: RefObject<HTMLElement>) => void;
 }
 
@@ -10,18 +10,19 @@ interface Props {
 }
 
 export interface IContextResult {
-  elements: RefObject<HTMLElement>[];
+  elements: MutableRefObject<RefObject<HTMLElement>[]>;
   subscribeElement: (element: RefObject<HTMLElement>) => void;
 }
 
 const SceneContext = createContext<Context>({} as Context);
 
 export const SceneProvider = ({ children }: Props) => {
-  const [elements, setElements] = useState<RefObject<HTMLElement>[]>([]);
+  // const [elements, setElements] = useState<RefObject<HTMLElement>[]>([]);
+  const elements = useRef<RefObject<HTMLElement>[]>([]);
 
   const subscribeElement = useCallback(
     (element: RefObject<HTMLElement>) => {
-      setElements([...elements, element]);
+      elements.current = [...elements.current, element];
     },
     [elements]
   );

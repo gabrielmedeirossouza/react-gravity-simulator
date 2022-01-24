@@ -4,20 +4,34 @@ import { SceneProvider } from "../../sceneObjects/contexts/useScene";
 
 import { Container } from "./Styles";
 
-export const Main = () => (
-  <SceneProvider>
-    <Container>
-      <Block
-        impulse={new Vector2(-15, 15)}
-        position={new Vector2(window.innerWidth / 2, window.innerHeight / 2)}
-        time={1000}
-      />
+export const Main = () => {
+  const blockAPosition = new Vector2(
+    window.innerWidth / 2,
+    window.innerHeight / 2
+  );
 
-      <Block
-        impulse={new Vector2(2, 15)}
-        position={new Vector2(window.innerWidth / 2 + 150, window.innerHeight / 2)}
-        time={1500}
-      />
-    </Container>
-  </SceneProvider>
-);
+  const blockBPosition = new Vector2(
+    window.innerWidth / 2 + 150,
+    window.innerHeight / 2
+  );
+
+
+  return (
+    <SceneProvider>
+      <Container>
+        <Block
+          impulse={new Vector2(0, 20)}
+          position={blockAPosition}
+        />
+  
+        <Block
+          impulse={new Vector2(-15, 20)}
+          position={blockBPosition}
+          withCollider
+        />
+      </Container>
+    </SceneProvider>
+  );
+}
+
+

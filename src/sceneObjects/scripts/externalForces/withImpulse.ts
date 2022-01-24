@@ -1,5 +1,5 @@
 import { IVector2 } from "../../../core/Vector2";
-import { IArgProps } from "../../hooks/useSceneObject";
+import { IWithScripts } from "../../hooks/useSceneObject";
 
 interface IWithImpulseProps {
   impulse: IVector2;
@@ -7,7 +7,7 @@ interface IWithImpulseProps {
 }
 
 export const withImpulse =
-  ({ impulse, time }: IWithImpulseProps) => ({ loop, sceneObject }: IArgProps) => {
+  ({ impulse, time }: IWithImpulseProps) => ({ loop, sceneObject }: IWithScripts) => {
     const finalImpulseX = loop.time < time ? impulse.x - impulse.x / (time / loop.time) : 0;
     const finalImpulseY = loop.time < time ? impulse.y - impulse.y / (time / loop.time) : 0;
 

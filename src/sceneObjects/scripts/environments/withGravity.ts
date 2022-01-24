@@ -1,5 +1,5 @@
 import { GRAVITY } from "../../../core/Constants";
-import { IArgProps } from "../../hooks/useSceneObject";
+import { IWithScripts } from "../../hooks/useSceneObject";
 
 /*
  * Função horária da velocidade no MUV => V = Vo + at
@@ -27,7 +27,7 @@ import { IArgProps } from "../../hooks/useSceneObject";
  */
 
 export const withGravity =
-  () => ({ loop, sceneObject }: IArgProps) => {
+  () => ({ loop, sceneObject }: IWithScripts) => {
     // Função horária da velocidade => V = Vo + at
     const finalVelocity = sceneObject.velocity.y + GRAVITY * loop.deltaTime;
 
